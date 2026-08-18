@@ -23,7 +23,6 @@ The goal of this project is to build, evaluate, and deploy multiple supervised m
 
 ## c. GitHub Repository Link
 
-> **TODO:** Replace this with your actual GitHub repository URL before submission.
 >
 > `https://github.com/ARROW12/ml-assignment-2.git`
 
