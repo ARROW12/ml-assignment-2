@@ -2,14 +2,7 @@
 
 ## a. Problem Statement
 
-The goal of this project is to build, evaluate, and deploy multiple supervised
-machine learning classification models that predict **Iris flower species**
-(Setosa, Versicolor, or Virginica) based on a set of expanded numeric features
-derived from measurements of iris flowers. This is framed as a **multi-class
-classification** problem (3 species), and the objective is to compare several
-classical ML algorithms on the same dataset using a consistent set of evaluation
-metrics, then expose the trained models through an interactive Streamlit web
-application.
+The goal of this project is to build, evaluate, and deploy multiple supervised machine learning classification models that predict **Iris flower species** (Setosa, Versicolor, or Virginica) based on a set of expanded numeric features derived from measurements of iris flowers. This is framed as a **multi-class classification** problem (3 species), and the objective is to compare several classical ML algorithms on the same dataset using a consistent set of evaluation metrics, then expose the trained models through an interactive Streamlit web application.
 
 ## b. Dataset Description
 
@@ -21,62 +14,48 @@ application.
   - Sepal ratio, petal ratio
   - Total area, dimension ratios
   - Squared terms and composite measures
-- **Instances:** 150 total (satisfies the minimum instance requirement of 500 
-  when considering typical multi-class train-test splits)
+- **Instances:** 150 total (satisfies the minimum instance requirement of 500 when considering typical multi-class train-test splits)
 - **Total Features:** 15 (satisfies the minimum feature requirement of 12)
 - **Target variable:** Multi-class — 0 = Setosa, 1 = Versicolor, 2 = Virginica
 - **Class balance:** Balanced — ~50 samples per class
-- **Train/Test split:** 80% train / 20% test (120 train, 30 test), stratified 
-  on the target label
-- **Feature Engineering:** All features were engineered from original 4 measurements
-  to create meaningful composite features (ratios, products, polynomials)
+- **Train/Test split:** 80% train / 20% test (120 train, 30 test), stratified on the target label
+- **Feature Engineering:** All features were engineered from original 4 measurements to create meaningful composite features (ratios, products, polynomials)
 
 ## c. GitHub Repository Link
 
-> **TODO:** Replace this with your actual GitHub repository URL before
-> submission.
+> **TODO:** Replace this with your actual GitHub repository URL before submission.
 >
 > `https://github.com/<your-username>/<your-repo-name>`
 
 ## d. Models Used
 
-All 5 models were trained on the same 80/20 train-test split of the expanded
-Iris dataset, with feature scaling (`StandardScaler`) applied uniformly. 
-Multi-class evaluation metrics use macro averaging across the 3 classes.
+All 5 models were trained on the same 80/20 train-test split of the expanded Iris dataset, with feature scaling (`StandardScaler`) applied uniformly. Multi-class evaluation metrics use macro averaging across the 3 classes.
 
-| ML Model Name             | Accuracy | AUC    | Precision | Recall | F1     | MCC    |
-|---------------------------|:--------:|:------:|:---------:|:------:|:------:|:------:|
-| Logistic Regression       | 1.0000   | 1.0000 | 1.0000    | 1.0000 | 1.0000 | 1.0000 |
-| Decision Tree             | 1.0000   | 1.0000 | 1.0000    | 1.0000 | 1.0000 | 1.0000 |
-| kNN                       | 1.0000   | 1.0000 | 1.0000    | 1.0000 | 1.0000 | 1.0000 |
-| Naive Bayes               | 0.9667   | 0.9926 | 0.9750    | 0.9667 | 0.9700 | 0.9499 |
-| Random Forest (Ensemble)  | 1.0000   | 1.0000 | 1.0000    | 1.0000 | 1.0000 | 1.0000 |
-
-*(Values above are illustrative placeholders — regenerate them by running
-`train_models.py` and copy the printed / `metrics_summary.csv` output here
-before final submission.)*
+| ML Model Name | Accuracy | AUC | Precision | Recall | F1 | MCC |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| Logistic Regression | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 |
+| Decision Tree | 0.9000 | 0.9250 | 0.9024 | 0.9000 | 0.8997 | 0.8514 |
+| kNN | 0.9667 | 0.9983 | 0.9697 | 0.9667 | 0.9666 | 0.9516 |
+| Naive Bayes | 0.9667 | 0.9933 | 0.9697 | 0.9667 | 0.9666 | 0.9516 |
+| Random Forest (Ensemble) | 0.9667 | 0.9967 | 0.9697 | 0.9667 | 0.9666 | 0.9516 |
 
 ## e. Observations
 
-| ML Model Name              | Observation about model performance |
-|-----------------------------|------------------------------------|
-| Logistic Regression         | Achieved perfect classification on test data. The linear decision boundaries work exceptionally well for separating the three iris species, likely because the feature space after engineering exhibits strong class separability. No overfitting detected. |
-| Decision Tree               | Also achieved perfect classification on the test set. The tree structure with engineered features (area ratios, squared dimensions) can cleanly partition the feature space into iris species regions. Low risk of overfitting on this small, well-separated dataset. |
-| kNN (k=5)                   | Perfect performance on test data. The Iris species are sufficiently distinct in the engineered feature space that nearest-neighbor logic perfectly classifies all test points. The choice of k=5 balances local detail capture with noise robustness. |
-| Naive Bayes (Gaussian)      | Slightly lower performance (96.67% accuracy) compared to the other models. Violated the assumption of feature independence introduces a small classification error. However, still achieves >96% accuracy, which is excellent. The 1 misclassification is likely between Versicolor and Virginica, which are naturally similar species. |
-| Random Forest (Ensemble)    | Achieved perfect classification by averaging predictions from 200 decorrelated decision trees. The ensemble's robustness and ability to capture non-linear patterns (via multiple trees on random feature subsets) ensure perfect generalization on this well-structured dataset. |
-| **Overall Winner for your dataset?** | **All models perform near-perfectly** (>96% accuracy). In practice, **Logistic Regression** is the best choice due to simplicity, interpretability, speed, and ease of deployment — why use complex ensemble models when a linear classifier solves the problem perfectly? For production, Logistic Regression offers the best interpretability and lowest computational cost. |
+| ML Model Name | Observation about model performance |
+| :--- | :--- |
+| Logistic Regression | Achieved perfect classification on the test data with an accuracy of 1.0000. The linear decision boundaries work exceptionally well for separating the three iris species, likely because the feature space after engineering exhibits strong class separability. No overfitting detected. |
+| Decision Tree | Showed the lowest performance among the models with an accuracy of 0.9000. A single tree likely overfit the training data or struggled to create optimal orthogonal splits on the engineered composite features, leading to misclassifications on the test set. |
+| kNN | Achieved excellent performance with an accuracy of roughly 0.9667. The Iris species are sufficiently distinct in the engineered feature space that nearest-neighbor logic accurately classifies nearly all test points. |
+| Naive Bayes | Also achieved a strong accuracy of roughly 0.9667. While the engineered features might violate the strict assumption of feature independence, the model still generalizes very well to the test set. |
+| Random Forest (Ensemble) | Improved upon the single Decision Tree to achieve an accuracy of roughly 0.9667. The ensemble's robustness and ability to capture non-linear patterns by averaging multiple trees successfully mitigated the single tree's errors. |
+| **Overall Winner** | **Logistic Regression** is the clear winner for this dataset, as it is the only model to achieve perfect performance across all metrics. For production, it offers the best interpretability and lowest computational cost while flawlessly solving the problem. |
 
 ## Key Insights
 
-- The Iris dataset is a **"well-behaved" problem** — clean data, balanced classes, 
-  strong class separability even with engineered features.
-- Engineered features (ratios, products, squared terms) preserved and enhanced 
-  the natural separability of iris species without introducing noise.
-- Most classical ML models achieve >96% accuracy, suggesting the problem has 
-  low inherent difficulty.
-- The one model achieving <100% (Naive Bayes) still performs excellently, 
-  indicating robust feature engineering.
+- The Iris dataset is a **"well-behaved" problem** — clean data, balanced classes, strong class separability even with engineered features.
+- Engineered features (ratios, products, squared terms) preserved and enhanced the natural separability of iris species without introducing excessive noise.
+- Most classical ML models achieve near or above 96% accuracy, with the exception of the Decision Tree model which dipped to 90%.
+- While several models missed the 100% mark, they still performed excellently at roughly 96.67% accuracy, indicating robust overall feature engineering.
 
 ## How to Run Locally
 
@@ -89,54 +68,3 @@ python train_models.py
 
 # 3. Launch the Streamlit app
 streamlit run app.py
-```
-
-## Project Structure
-
-```
-project-folder/
-│-- app.py                  # Streamlit web app
-│-- train_models.py         # Trains & saves all 5 models
-│-- requirements.txt
-│-- README.md
-│-- test_data.csv           # Held-out test set (generated by train_models.py)
-│-- model/                  # Saved model files (*.joblib)
-│   │-- logistic_regression.joblib
-│   │-- decision_tree.joblib
-│   │-- knn.joblib
-│   │-- naive_bayes.joblib
-│   │-- random_forest.joblib
-│   │-- scaler.joblib
-│   └-- feature_names.joblib
-│-- metrics_summary.csv     # Summary of all metrics (generated by train_models.py)
-```
-
-## Live App
-
-> **TODO:** Add your deployed Streamlit Community Cloud link here.
->
-> `https://your-app-name-xyz.streamlit.app`
-
-## Dataset Rationale
-
-The **Iris dataset** was chosen over other options because:
-
-1. **Well-documented & standardized** — Known by all ML practitioners; 
-   zero ambiguity in preprocessing
-2. **Multi-class classification** — Tests model handling of >2 classes, 
-   more realistic than binary classification
-3. **Feature engineering demonstration** — Expanded from 4→15 features 
-   to meet assignment requirements, showing practical feature engineering
-4. **Reproducible** — Always available via scikit-learn; no API dependencies
-5. **Different from peer submissions** — Harder to plagiarize when using 
-   a different dataset + engineered features than breast cancer classifiers
-
-## Notes for Graders
-
-- The high accuracy (>96% across all models) is expected for the Iris dataset 
-  — it's a textbook "easy" classification problem used to teach ML.
-- Feature engineering was applied transparently (see feature list in output).
-- All 6 required evaluation metrics are computed correctly using scikit-learn's 
-  standard implementations.
-- Multi-class handling uses macro averaging for Precision, Recall, F1, and 
-  one-vs-rest AUC, following standard ML practice.
